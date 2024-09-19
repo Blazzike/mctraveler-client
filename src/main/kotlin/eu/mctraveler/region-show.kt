@@ -263,6 +263,7 @@ fun initializeRegionShow() {
       RenderSystem.setShaderColor(1f, 1f, 1f, 0.1f)
       RenderSystem.setShader(GameRenderer::getPositionColorShader)
       BufferUploader.drawWithShader(mesh)
+      RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
       RenderSystem.enableCull()
       RenderSystem.disableBlend()
     }
