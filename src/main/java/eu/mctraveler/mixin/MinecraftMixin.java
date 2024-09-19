@@ -3,6 +3,7 @@ package eu.mctraveler.mixin;
 import eu.mctraveler.McTravelerConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,28 +15,10 @@ import static eu.mctraveler.Auto_loginKt.setDidAutoJoin;
 import static eu.mctraveler.ConfigKt.getConfig;
 import static eu.mctraveler.UtilKt.joinMcTraveler;
 
-@Mixin(Minecraft.class)
+@Mixin(TitleScreen.class)
 public abstract class MinecraftMixin {
-    @Shadow
-    @Nullable
-    public Screen screen;
-
-    @Shadow
-    public static Minecraft getInstance() {
-        return null;
-    }
-
-    @Inject(method = "onGameLoadFinished", at = @At("HEAD"))
+    @Inject(method = "", at = @At("RETURN"))
     private void onGameLoadFinished(CallbackInfo ci) {
-        McTravelerConfig config = getConfig();
-        if (config == null || !config.isAutoJoinEnabled) {
-            return;
-        }
 
-        assert this.screen != null;
-        Minecraft instance = getInstance();
-        assert instance != null;
-        setDidAutoJoin(true);
-        joinMcTraveler(this.screen, instance);
     }
 }

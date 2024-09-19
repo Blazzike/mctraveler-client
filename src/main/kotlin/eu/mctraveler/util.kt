@@ -13,8 +13,7 @@ fun joinMcTraveler(screen: Screen, minecraft: Minecraft) {
     screen,
     minecraft,
     ServerAddress.parseString(serverIp),
-    ServerData("MCTraveler", serverIp, ServerData.Type.OTHER),
+    ServerData("MCTraveler", serverIp, false),
     false,
-    null
   )
 }

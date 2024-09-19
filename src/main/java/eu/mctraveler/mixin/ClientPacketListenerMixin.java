@@ -1,14 +1,14 @@
 package eu.mctraveler.mixin;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientCommonPacketListenerImpl;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.multiplayer.CommonListenerCookie;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.*;
-import net.minecraft.world.scores.DisplaySlot;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundSetDisplayObjectivePacket;
+import net.minecraft.network.protocol.game.ClientboundSetObjectivePacket;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,12 +18,9 @@ import java.util.Objects;
 import static eu.mctraveler.Discord_activityKt.*;
 
 @Mixin(ClientPacketListener.class)
-public abstract class ClientPacketListenerMixin extends ClientCommonPacketListenerImpl {
+public abstract class ClientPacketListenerMixin {
+    @Unique
     private String previousRegionName;
-
-    protected ClientPacketListenerMixin(Minecraft minecraft, Connection connection, CommonListenerCookie commonListenerCookie, Minecraft minecraft1) {
-        super(minecraft, connection, commonListenerCookie);
-    }
 
     @Inject(method = "handleAddObjective", at = @At("HEAD"))
     private void handleAddObjective(ClientboundSetObjectivePacket p, CallbackInfo ci) {
@@ -42,7 +39,7 @@ public abstract class ClientPacketListenerMixin extends ClientCommonPacketListen
 
     @Inject(method = "handleSetDisplayObjective", at = @At("HEAD"))
     private void handleSetDisplayObjective(ClientboundSetDisplayObjectivePacket p, CallbackInfo ci) {
-        if (p.getSlot() != DisplaySlot.SIDEBAR) {
+        if (p.getSlot() != 1) {
             return;
         }
 
@@ -52,7 +49,7 @@ public abstract class ClientPacketListenerMixin extends ClientCommonPacketListen
 
     @Inject(method = "handlePlayerInfoUpdate", at = @At("HEAD"))
     private void handlePlayerInfoUpdate(ClientboundPlayerInfoUpdatePacket p, CallbackInfo ci) {
-        LocalPlayer player = this.minecraft.player;
+        LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
@@ -62,7 +59,7 @@ public abstract class ClientPacketListenerMixin extends ClientCommonPacketListen
 
     @Inject(method = "handlePlayerInfoRemove", at = @At("HEAD"))
     private void handlePlayerInfoRemove(ClientboundPlayerInfoRemovePacket p, CallbackInfo ci) {
-        LocalPlayer player = this.minecraft.player;
+        LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }

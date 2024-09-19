@@ -1,6 +1,8 @@
 package eu.mctraveler.mixin;
 
-import net.minecraft.client.gui.components.SpriteIconButton;
+import eu.mctraveler.McTravelerConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
@@ -10,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static eu.mctraveler.Auto_loginKt.setDidAutoJoin;
+import static eu.mctraveler.ConfigKt.getConfig;
 import static eu.mctraveler.UtilKt.joinMcTraveler;
 
 @Mixin(TitleScreen.class)
@@ -20,11 +24,18 @@ public class PlayMcTravelerButtonMixin extends Screen {
 
     @Inject(at = @At("RETURN"), method = "createNormalMenuOptions")
     private void createNormalMenuOptions(int i, int j, CallbackInfo ci) {
-        SpriteIconButton spriteIconButton = this.addRenderableWidget(SpriteIconButton.builder(Component.literal("Join MCTraveler"), (button) -> {
+        this.addRenderableWidget(new ImageButton(this.width / 2 + 104, i + j, 20, 20, 0, 106, 20, new ResourceLocation("mctraveler-client", "textures/gui/widgets.png"), 256, 256, (button) -> {
             assert this.minecraft != null;
             joinMcTraveler(this, this.minecraft);
-        }, true).width(20).sprite(ResourceLocation.fromNamespaceAndPath("mctraveler-client", "icon/mctraveler"), 15, 15).build());
+        }, Component.literal("Join MCTraveler")));
 
-        spriteIconButton.setPosition(this.width / 2 + 104, i + j);
+        McTravelerConfig config = getConfig();
+        if (config == null || !config.isAutoJoinEnabled) {
+            return;
+        }
+
+        Minecraft instance = Minecraft.getInstance();
+        setDidAutoJoin(true);
+        joinMcTraveler(this, instance);
     }
 }
