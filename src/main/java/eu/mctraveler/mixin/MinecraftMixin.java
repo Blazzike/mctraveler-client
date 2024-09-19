@@ -1,6 +1,6 @@
 package eu.mctraveler.mixin;
 
-import eu.mctraveler.McTravelerConfigModel;
+import eu.mctraveler.McTravelerConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +27,7 @@ public abstract class MinecraftMixin {
 
     @Inject(method = "onGameLoadFinished", at = @At("HEAD"))
     private void onGameLoadFinished(CallbackInfo ci) {
-        McTravelerConfigModel config = getConfig();
+        McTravelerConfig config = getConfig();
         if (config == null || !config.isAutoJoinEnabled) {
             return;
         }

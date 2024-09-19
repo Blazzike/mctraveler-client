@@ -3,7 +3,7 @@ package eu.mctraveler
 import com.google.gson.Gson
 import net.minecraft.client.Minecraft
 
-class McTravelerConfigModel {
+class McTravelerConfig {
   @JvmField
   var isAutoJoinEnabled = true
 
@@ -17,17 +17,17 @@ class McTravelerConfigModel {
 }
 
 val configFile = Minecraft.getInstance().gameDirectory.resolve("config/mctraveler-config.json")
-var config: McTravelerConfigModel? = null
+var config: McTravelerConfig? = null
 
 fun initializeConfig() {
   if (!configFile.exists()) {
-    config = McTravelerConfigModel()
+    config = McTravelerConfig()
     config!!.save()
 
     return
   }
 
-  config = Gson().fromJson(configFile.readText(), McTravelerConfigModel::class.java)
+  config = Gson().fromJson(configFile.readText(), McTravelerConfig::class.java)
   if (config == null) {
     configFile.delete()
     initializeConfig()
