@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "eu.mctraveler.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "ClientPacketListenerMixin",
+    "MinecraftMixin",
+    "PlayMcTravelerButtonMixin",
+    "UserMixin"
+  ]
+}
