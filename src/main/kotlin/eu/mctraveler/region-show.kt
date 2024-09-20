@@ -95,7 +95,7 @@ fun initializeRegionShow() {
   }
 
   WorldRenderEvents.LAST.register { context ->
-    if (regions.isEmpty()) {
+    if (!isOnMcTraveler || regions.isEmpty()) {
       return@register
     }
 

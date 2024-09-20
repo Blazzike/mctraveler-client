@@ -3,13 +3,14 @@
 	"id": "mctraveler-client",
 	"version": "${version}",
 	"name": "MCTraveler Client",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "The official client mod for the MCTraveler server.",
 	"authors": [
-		"Me!"
+		"iElmo"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://mctraveler.eu/",
+		"sources": "https://github.com/Blazzike/mctraveler-client",
+		"issues": "https://github.com/Blazzike/mctraveler-client/issues"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/mctraveler-client/icon.png",

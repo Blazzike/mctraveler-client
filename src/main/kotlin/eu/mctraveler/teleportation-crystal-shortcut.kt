@@ -63,6 +63,10 @@ fun initializeTeleportationCrystalShortcut() {
 
   var isPressed = false
   ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client: Minecraft ->
+    if (!isOnMcTraveler) {
+      return@EndTick
+    }
+
     if (keyMapping.isDown && !isPressed) {
       onPress()
     }

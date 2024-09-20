@@ -1,7 +1,10 @@
 package eu.mctraveler
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.screens.TitleScreen
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -43,5 +46,25 @@ fun initializeAutoLogin() {
     config!!.isAutoJoinEnabled = payload.enabled
     config!!.save()
     logger.info("Received auto-login enabled payload ${payload.enabled}")
+  }
+
+
+  var hasAttemptedAutoJoin = false
+  ScreenEvents.AFTER_INIT.register { client, screen, scaledWidth, scaledHeight ->
+    if (screen !is TitleScreen) {
+      return@register
+    }
+
+    if (hasAttemptedAutoJoin) {
+      return@register
+    }
+
+    if (!config!!.isAutoJoinEnabled) {
+      return@register
+    }
+    
+    hasAttemptedAutoJoin = true
+    didAutoJoin = true
+    joinMcTraveler(screen, Minecraft.getInstance())
   }
 }

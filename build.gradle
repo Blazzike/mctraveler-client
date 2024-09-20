@@ -25,7 +25,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
-	shadow "io.github.vyfor:kpresence:0.6.2" // TODO shadow instead of implementation
+	implementation "io.github.vyfor:kpresence:0.6.2" // TODO shadow instead of implementation
 }
 
 processResources {
