@@ -14,10 +14,8 @@ import java.util.Objects;
 
 @Mixin(PlayerScoreEntry.class)
 public class PlayerScoreEntryMixin {
-    @Final
-    @Shadow private NumberFormat numberFormatOverride;
-    @Final
-    @Shadow private int value;
+    @Final @Shadow private NumberFormat numberFormatOverride;
+    @Final @Shadow private int value;
 
     @Overwrite
     public MutableComponent formatValue(NumberFormat numberFormat) {

@@ -5,11 +5,17 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.TitleScreen
+import net.minecraft.client.multiplayer.ClientPacketListener
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket
+import net.minecraft.network.protocol.game.ServerPacketListener
+import net.minecraft.network.protocol.status.ClientboundStatusResponsePacket
+import net.minecraft.network.protocol.status.ServerboundStatusRequestPacket
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.stats.ServerStatsCounter
 
 var didAutoJoin = false
 
@@ -39,6 +45,7 @@ data class SetAutoLoginEnabledPayload(
 }
 
 fun initializeAutoLogin() {
+  ServerStatsCounter
   PayloadTypeRegistry.playS2C().register(SetAutoLoginEnabledPayload.TYPE, SetAutoLoginEnabledPayload.STREAM_CODEC)
   ClientPlayNetworking.registerGlobalReceiver(
     SetAutoLoginEnabledPayload.TYPE
@@ -53,7 +60,7 @@ fun initializeAutoLogin() {
   ScreenEvents.AFTER_INIT.register { client, screen, scaledWidth, scaledHeight ->
     if (screen !is TitleScreen) {
       return@register
-    }
+  }
 
     if (hasAttemptedAutoJoin) {
       return@register

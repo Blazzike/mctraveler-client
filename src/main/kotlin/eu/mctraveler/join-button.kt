@@ -27,7 +27,5 @@ fun initializeJoinButton() {
     Screens.getButtons(screen).add(
       0, iconButton
     )
-
-
   }
 }

@@ -16,6 +16,7 @@ object MCTravelerClient : ModInitializer {
     initializeDiscordActivity()
     initializeRegionShow()
     initializeJoinButton()
+    initializeCapture()
     initializeHello()
     initializeTeleportationCrystalShortcut()
 
